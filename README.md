@@ -23,6 +23,8 @@ Erling Haaland                     155            4                74.9   15
 Brian Brobbey                       60            4                22.6   20
 ```
 
+Something I could change about the programme is that it currently maximises the % owned of the entire squad, when in reality, the % owned of the starting 11 is more important than the bench players. I could change the programme to place some "weight" on the starting 11, and less weight on the bench players, but so far the optimisation has always selected a few very cheap players to free up budget for the most selected players, so I don't think this is a huge issue.
+
 Using this I was able to create a modified version of the function which fetches an existing FPL team and the number of transfers allowed, and maximises % owned based on those restrictions as well.
 
 Because the season hasn't started yet, there is no limit on transfers, but here is an output when restricted to 3 transfers (performed on a team created by just using the "auto-pick" feature):
