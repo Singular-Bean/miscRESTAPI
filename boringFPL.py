@@ -11,7 +11,7 @@ pd.set_option('display.width', 1000)
 connection = http.client.HTTPSConnection('fantasy.premierleague.com')
 
 headers = {
-    'x-api-authorization': 'Bearer eyJhbGciOiJSUzI1NiIsImtpZCI6ImRlZmF1bHQifQ.eyJjbGllbnRfaWQiOiJiZmNiYWY2OS1hYWRlLTRjMWItOGYwMC1jMWNiOGExOTMwMzAiLCJpc3MiOiJodHRwczovL2FjY291bnQucHJlbWllcmxlYWd1ZS5jb20vYXMiLCJqdGkiOiI0OGU0ZmYwZC1hYzAyLTQzOTktYTkxOC04OTQyMjZjYmM3YmYiLCJpYXQiOjE3ODUxNTEwMzUsImV4cCI6MTc4NTE3OTgzNSwiYXVkIjpbImh0dHBzOi8vYXBpLnBpbmdvbmUuZXUiXSwic2NvcGUiOiJvcGVuaWQgcHJvZmlsZSBlbWFpbCIsInN1YiI6IjRmYzVmZmY3LWE4ODEtNGRiNS1iZWNjLTQ1ODQxOTk5NTAxMCIsInNpZCI6IjhhZjAxYjY5LWJmNTgtNGZiMi04ZTNkLTI2YWU3OTkwOWRlZCIsImF1dGhfdGltZSI6MTc4MjU2NjAyMSwiYWNyIjoiMjYyY2U0YjAxZDE5ZGQ5ZDM4NWQyNmJkZGI0Mjk3YjYiLCJhdXRoZW50aWNhdG9yIjoicHdkIiwiaHR0cDovL21lZGlha2luZC5jb20vbWYvdGlkIjoiZGVmYXVsdCIsImVudiI6IjY4MzQwZGUxLWRmYjktNDEyZS05MzdjLTIwMTcyOTg2ZDEyOSIsIm9yZyI6IjNhNjg1MDMyLTgzMjYtNDk2OS1hNzhiLWNjMjk3NzViMTNkNiIsInAxLnJpZCI6IjVkMGZiOWUxLWNhM2YtNDI4Ny05MjQxLWM3NzJkYTBmN2NmNCJ9.eAWgrciX_Ef3wJ_OcbcDZibpo2Lv1OI9ksCkOq94SpUT5vY-0mWqStAJeSbjFFGa9vFh6ubDkJ3oJBEGbcdFESfbdL8hBKUZ1zNWFe0w3P7OtLjR9O0wGJN5OiOou1_KRjyvz41XGHgSZkqC-pgi0lZcbKEiCNst8_3mBH5kLg9sSZmv4pb-IaKyRF8RpjtuFrE9JVmCSXp4MEmKh-i9rM1D7VznrtlmxkejEIWO3cLB0nMqZoTFDP40qIJ5FjQAOICN9XwtfLUq5rZgAqa1BFHpQdWeKYS79Yn1-OL4jPV5J2XLMoP9wH98qXEs9DSJGeTunEcaA7DaK8l70alNkQ'
+    'x-api-authorization': 'Bearer eyJhbGciOiJSUzI1NiIsImtpZCI6ImRlZmF1bHQifQ.eyJjbGllbnRfaWQiOiJiZmNiYWY2OS1hYWRlLTRjMWItOGYwMC1jMWNiOGExOTMwMzAiLCJpc3MiOiJodHRwczovL2FjY291bnQucHJlbWllcmxlYWd1ZS5jb20vYXMiLCJqdGkiOiIyNzkxZmVkNi0yNDk1LTQ0ZGMtYWRlZi1hNTYxNWQ4ZmQ4ZjIiLCJpYXQiOjE3ODYzMTQzOTIsImV4cCI6MTc4NjM0MzE5MiwiYXVkIjpbImh0dHBzOi8vYXBpLnBpbmdvbmUuZXUiXSwic2NvcGUiOiJvcGVuaWQgcHJvZmlsZSBlbWFpbCIsInN1YiI6IjRmYzVmZmY3LWE4ODEtNGRiNS1iZWNjLTQ1ODQxOTk5NTAxMCIsInNpZCI6ImVhZjBkZDJmLTRjMDUtNDQzZC05YWJkLWRmODIxZTM1ZWQwMiIsImF1dGhfdGltZSI6MTc4NTI1NDMzNywiYWNyIjoiMjYyY2U0YjAxZDE5ZGQ5ZDM4NWQyNmJkZGI0Mjk3YjYiLCJhdXRoZW50aWNhdG9yIjoicHdkIiwiaHR0cDovL21lZGlha2luZC5jb20vbWYvdGlkIjoiZGVmYXVsdCIsImVudiI6IjY4MzQwZGUxLWRmYjktNDEyZS05MzdjLTIwMTcyOTg2ZDEyOSIsIm9yZyI6IjNhNjg1MDMyLTgzMjYtNDk2OS1hNzhiLWNjMjk3NzViMTNkNiIsInAxLnJpZCI6IjNkMGY3ZmE3LTM5NjItNDkwOC04NmMxLTNlNWViZGFhMGMxYiJ9.NEEiLF5idp-DCBWSDVbuXxMEa8RLIXfd-pTx9fXDicQGjgjwTXSCXH0soKx-j0g8qiabEWXqn2dqKKnhMAzXLWQnwSrywcibxqK7QKhc19aGpO8CNHnPnPW09Q1KdBh5AkJc_yQp66hIIe7_7zDH4JO0zK4oasNd0d59Yt9Qxz1A0QvJl1jW_oHLTA4tn49ltrFPfwjOuTVTvmMFYtQCXwWX6C0oMrZzOGAEaxTp0j-Tlbt-J09kAEItiDzv6FoMGbp8bfBfsOzy0tmatrFCqbcjDd8wT6EtyHKR1srTMEnJ7KuqBeQQhefnPS-tjBX7No1W95QPgROo8dEKcw8VtA'
     }
 
 
@@ -113,6 +113,28 @@ def optimiseWithTransfers(playerData: pd.DataFrame, currentSquadIds: list, allow
 
     return playerData.loc[selectedIndices]
 
+def getBench(dfOg: pd.DataFrame):
+    df = dfOg.copy()
+    df.sort_values(by="selected_by_percent", inplace=True)
+    benchNames = []
+    benchTypes = []
+    goalkeeper = []
+    for index, row in df.iterrows():
+        if row['element_type'] == 1 and len(goalkeeper) < 1:
+            goalkeeper.append(index)
+        elif row['element_type'] == 2 and benchTypes.count(2) < 2 and len(benchNames) < 3:
+            benchNames.append(index)
+            benchTypes.append(2)
+        elif row['element_type'] == 3 and benchTypes.count(3) < 3 and len(benchNames) < 3:
+            benchNames.append(index)
+            benchTypes.append(3)
+        elif row['element_type'] == 4 and benchTypes.count(4) < 2 and len(benchNames) < 3:
+            benchNames.append(index)
+            benchTypes.append(4)
+    benchNames.reverse()
+    benchNames = goalkeeper + benchNames
+    print(f"\nBench: {benchNames}")
+
 
 allInfo = jsonRequest("/api/bootstrap-static/", cache_ttl=1)
 
@@ -154,10 +176,11 @@ currentTeamList = []
 for id in teamIds:
     currentTeamList.append(DF2.loc[id, "playerName"])
 
-optimisedTeam = optimiseWithTransfers(DF2, teamIds, 3, maxBudget=squadCurrentValue).sort_values(by="element_type")
+optimisedTeam = optimiseWithTransfers(DF2, teamIds, 15, maxBudget=squadCurrentValue).sort_values(by="element_type")
 optimisedTeam.set_index('playerName', inplace=True)
 optimisedTeam.index.name = None
 print(optimisedTeam)
+getBench(optimisedTeam)
 newTeamList = []
 optimalSquadList = []
 for player in optimisedTeam.index:
