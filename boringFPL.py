@@ -11,7 +11,7 @@ pd.set_option('display.width', 1000)
 connection = http.client.HTTPSConnection('fantasy.premierleague.com')
 
 headers = {
-    'x-api-authorization': 'Bearer eyJhbGciOiJSUzI1NiIsImtpZCI6ImRlZmF1bHQifQ.eyJjbGllbnRfaWQiOiJiZmNiYWY2OS1hYWRlLTRjMWItOGYwMC1jMWNiOGExOTMwMzAiLCJpc3MiOiJodHRwczovL2FjY291bnQucHJlbWllcmxlYWd1ZS5jb20vYXMiLCJqdGkiOiIyNzkxZmVkNi0yNDk1LTQ0ZGMtYWRlZi1hNTYxNWQ4ZmQ4ZjIiLCJpYXQiOjE3ODYzMTQzOTIsImV4cCI6MTc4NjM0MzE5MiwiYXVkIjpbImh0dHBzOi8vYXBpLnBpbmdvbmUuZXUiXSwic2NvcGUiOiJvcGVuaWQgcHJvZmlsZSBlbWFpbCIsInN1YiI6IjRmYzVmZmY3LWE4ODEtNGRiNS1iZWNjLTQ1ODQxOTk5NTAxMCIsInNpZCI6ImVhZjBkZDJmLTRjMDUtNDQzZC05YWJkLWRmODIxZTM1ZWQwMiIsImF1dGhfdGltZSI6MTc4NTI1NDMzNywiYWNyIjoiMjYyY2U0YjAxZDE5ZGQ5ZDM4NWQyNmJkZGI0Mjk3YjYiLCJhdXRoZW50aWNhdG9yIjoicHdkIiwiaHR0cDovL21lZGlha2luZC5jb20vbWYvdGlkIjoiZGVmYXVsdCIsImVudiI6IjY4MzQwZGUxLWRmYjktNDEyZS05MzdjLTIwMTcyOTg2ZDEyOSIsIm9yZyI6IjNhNjg1MDMyLTgzMjYtNDk2OS1hNzhiLWNjMjk3NzViMTNkNiIsInAxLnJpZCI6IjNkMGY3ZmE3LTM5NjItNDkwOC04NmMxLTNlNWViZGFhMGMxYiJ9.NEEiLF5idp-DCBWSDVbuXxMEa8RLIXfd-pTx9fXDicQGjgjwTXSCXH0soKx-j0g8qiabEWXqn2dqKKnhMAzXLWQnwSrywcibxqK7QKhc19aGpO8CNHnPnPW09Q1KdBh5AkJc_yQp66hIIe7_7zDH4JO0zK4oasNd0d59Yt9Qxz1A0QvJl1jW_oHLTA4tn49ltrFPfwjOuTVTvmMFYtQCXwWX6C0oMrZzOGAEaxTp0j-Tlbt-J09kAEItiDzv6FoMGbp8bfBfsOzy0tmatrFCqbcjDd8wT6EtyHKR1srTMEnJ7KuqBeQQhefnPS-tjBX7No1W95QPgROo8dEKcw8VtA'
+    'x-api-authorization': 'Bearer eyJhbGciOiJSUzI1NiIsImtpZCI6ImRlZmF1bHQifQ.eyJjbGllbnRfaWQiOiJiZmNiYWY2OS1hYWRlLTRjMWItOGYwMC1jMWNiOGExOTMwMzAiLCJpc3MiOiJodHRwczovL2FjY291bnQucHJlbWllcmxlYWd1ZS5jb20vYXMiLCJqdGkiOiI0ZmZmZTk4Ny0xNmJjLTQyM2EtOTJkNS1hODJiMzBlOTE4OTMiLCJpYXQiOjE3ODY1NTE2MjcsImV4cCI6MTc4NjU4MDQyNywiYXVkIjpbImh0dHBzOi8vYXBpLnBpbmdvbmUuZXUiXSwic2NvcGUiOiJvcGVuaWQgcHJvZmlsZSBlbWFpbCIsInN1YiI6IjRmYzVmZmY3LWE4ODEtNGRiNS1iZWNjLTQ1ODQxOTk5NTAxMCIsInNpZCI6ImVhZjBkZDJmLTRjMDUtNDQzZC05YWJkLWRmODIxZTM1ZWQwMiIsImF1dGhfdGltZSI6MTc4NTI1NDMzNywiYWNyIjoiMjYyY2U0YjAxZDE5ZGQ5ZDM4NWQyNmJkZGI0Mjk3YjYiLCJhdXRoZW50aWNhdG9yIjoicHdkIiwiaHR0cDovL21lZGlha2luZC5jb20vbWYvdGlkIjoiZGVmYXVsdCIsImVudiI6IjY4MzQwZGUxLWRmYjktNDEyZS05MzdjLTIwMTcyOTg2ZDEyOSIsIm9yZyI6IjNhNjg1MDMyLTgzMjYtNDk2OS1hNzhiLWNjMjk3NzViMTNkNiIsInAxLnJpZCI6IjNkMGY3ZmE3LTM5NjItNDkwOC04NmMxLTNlNWViZGFhMGMxYiJ9.SmdtsDgwHyY0ikBImVoe3_UNEqrktAj1qFaR7W_2TsT-CiHrtRwuBneUSEKZ0ZBXYd-DOp-nk9JpyWEeWFLTIfonkoqjf4AIkTRRKFk-nae7twWAuww4NvSHM2AridxhvWSfP-GtOSSJKIPfw22yfEGXYmuAtdDkTktVT86EUJlgjlN4ruFlZl-cgx1XWBtREjxZT23LFub10QdGjeUqJrooRcaxht4Od3Elwbp_R_Pb-vJLMJx6QvxGb08t3COCOiL80QqAAZt39gzRy8CEhla8VWBkoW4IivARVZheuqg4WkbpSpr80e5VA_9YCTI_6KbcxYEHeW6CTC6wJHs_eg'
     }
 
 
@@ -113,12 +113,15 @@ def optimiseWithTransfers(playerData: pd.DataFrame, currentSquadIds: list, allow
 
     return playerData.loc[selectedIndices]
 
-def getBench(dfOg: pd.DataFrame):
+def getBenchAndCapitains(dfOg: pd.DataFrame):
     df = dfOg.copy()
     df.sort_values(by="selected_by_percent", inplace=True)
     benchNames = []
     benchTypes = []
     goalkeeper = []
+    count = 0
+    vice = None
+    cap = None
     for index, row in df.iterrows():
         if row['element_type'] == 1 and len(goalkeeper) < 1:
             goalkeeper.append(index)
@@ -131,12 +134,17 @@ def getBench(dfOg: pd.DataFrame):
         elif row['element_type'] == 4 and benchTypes.count(4) < 2 and len(benchNames) < 3:
             benchNames.append(index)
             benchTypes.append(4)
+        if count == 13:
+            vice = index
+        if count == 14:
+            cap = index
+        count += 1
     benchNames.reverse()
     benchNames = goalkeeper + benchNames
-    print(f"\nBench: {benchNames}")
+    print(f"\nBench: {benchNames}\nCaptain: {cap}\nVice Captain: {vice}")
 
 
-allInfo = jsonRequest("/api/bootstrap-static/", cache_ttl=1)
+allInfo = jsonRequest("/api/bootstrap-static/", cache_ttl=69)
 
 playerInfos = allInfo["elements"]
 
@@ -168,7 +176,7 @@ squadCurrentValue = sum(sellingPrices) + banked
 DF2 = pd.DataFrame(playerDict).T[['now_cost', 'element_type', 'selected_by_percent', 'team', 'id']]
 DF2.reset_index(names='playerName', inplace=True)
 DF2.set_index('id', inplace=True)
-overallOptimalSquad = optimiseFplSquad(DF, maxBudget=1000.0).sort_values(by="element_type")
+overallOptimalSquad = optimiseFplSquad(DF, maxBudget=1000.0).sort_values(by=["element_type", 'selected_by_percent'], ascending=[True, False])
 print(overallOptimalSquad)
 
 
@@ -176,11 +184,11 @@ currentTeamList = []
 for id in teamIds:
     currentTeamList.append(DF2.loc[id, "playerName"])
 
-optimisedTeam = optimiseWithTransfers(DF2, teamIds, 15, maxBudget=squadCurrentValue).sort_values(by="element_type")
+optimisedTeam = optimiseWithTransfers(DF2, teamIds, 15, maxBudget=squadCurrentValue).sort_values(by=["element_type", 'selected_by_percent'], ascending=[True, False])
 optimisedTeam.set_index('playerName', inplace=True)
 optimisedTeam.index.name = None
 print(optimisedTeam)
-getBench(optimisedTeam)
+getBenchAndCapitains(optimisedTeam)
 newTeamList = []
 optimalSquadList = []
 for player in optimisedTeam.index:
