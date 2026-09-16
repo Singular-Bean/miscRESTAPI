@@ -28,6 +28,7 @@ def jsonRequest(url, cache_ttl=None, permanent=None):
 
 
 def optimiseFplSquad(playerData: pd.DataFrame, maxBudget: float = 1000.0) -> pd.DataFrame:
+    playerData['selected_by_percent'] = playerData['selected_by_percent'].astype(float)
     optimisationProblem = pulp.LpProblem("MaxSelectedPercentSquad", pulp.LpMaximize)
     playerVars = pulp.LpVariable.dicts("player", playerData.index, cat="Binary")
 
@@ -70,6 +71,7 @@ def optimiseFplSquad(playerData: pd.DataFrame, maxBudget: float = 1000.0) -> pd.
 
 def optimiseWithTransfers(playerData: pd.DataFrame, currentSquadIds: list, allowedTransfers: int,
                           maxBudget: float = 1000.0) -> pd.DataFrame:
+    playerData['selected_by_percent'] = playerData['selected_by_percent'].astype(float)
     optimisationProblem = pulp.LpProblem("MaxSelectedPercentWithTransfers", pulp.LpMaximize)
     playerVars = pulp.LpVariable.dicts("player", playerData.index, cat="Binary")
 
@@ -115,6 +117,7 @@ def optimiseWithTransfers(playerData: pd.DataFrame, currentSquadIds: list, allow
 
 def getBenchAndCapitains(dfOg: pd.DataFrame):
     df = dfOg.copy()
+    df['selected_by_percent'] = df['selected_by_percent'].astype(float)
     df.sort_values(by="selected_by_percent", inplace=True)
     benchNames = []
     benchTypes = []
@@ -160,15 +163,18 @@ DF = pd.DataFrame(playerDict).T[['now_cost', 'element_type', 'selected_by_percen
 
 
 currentTeamData = jsonRequest("/api/my-team/133766/", cache_ttl=69)
+#currentTeamData = jsonRequest("/api/my-team/1320530/", cache_ttl=69)
 picks = currentTeamData["picks"]
 banked = currentTeamData["transfers"]['bank']
 teamIds = []
 sellingPrices = []
+currentSquadSelectedPct = 0
 for pick in picks:
     teamIds.append(pick['element'])
     sellingPrices.append(pick['selling_price'])
 for player in playerDict.keys():
     if playerDict[player]['id'] in teamIds:
+        currentSquadSelectedPct += float(playerDict[player]['selected_by_percent'])
         playerDict[player]['now_cost'] = sellingPrices[teamIds.index(playerDict[player]['id'])]
 
 squadCurrentValue = sum(sellingPrices) + banked
@@ -189,6 +195,8 @@ optimisedTeam.set_index('playerName', inplace=True)
 optimisedTeam.index.name = None
 print(optimisedTeam)
 getBenchAndCapitains(optimisedTeam)
+print(f"\nCurrent Squad Aggregate Selected Percentage: {currentSquadSelectedPct:.1f}")
+print(f"\nOptimal Squad Aggregate Selected Percentage: {sum(optimisedTeam['selected_by_percent'].astype(float)):.1f}")
 newTeamList = []
 optimalSquadList = []
 for player in optimisedTeam.index:
