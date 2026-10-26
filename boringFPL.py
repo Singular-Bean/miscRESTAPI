@@ -2,7 +2,9 @@ import json
 import pulp
 import http.client
 import pandas as pd
+from scipy.stats import binom
 from safe_requests_misc import safeRequest
+from benchWeightings import playedPercentageOutfield, playedPercentageGk
 
 pd.set_option('display.max_columns', None)
 pd.set_option('display.width', 1000)
@@ -11,9 +13,17 @@ pd.set_option('display.width', 1000)
 connection = http.client.HTTPSConnection('fantasy.premierleague.com')
 
 headers = {
-    'x-api-authorization': 'Bearer eyJhbGciOiJSUzI1NiIsImtpZCI6ImRlZmF1bHQifQ.eyJjbGllbnRfaWQiOiJiZmNiYWY2OS1hYWRlLTRjMWItOGYwMC1jMWNiOGExOTMwMzAiLCJpc3MiOiJodHRwczovL2FjY291bnQucHJlbWllcmxlYWd1ZS5jb20vYXMiLCJqdGkiOiI0ZmZmZTk4Ny0xNmJjLTQyM2EtOTJkNS1hODJiMzBlOTE4OTMiLCJpYXQiOjE3ODY1NTE2MjcsImV4cCI6MTc4NjU4MDQyNywiYXVkIjpbImh0dHBzOi8vYXBpLnBpbmdvbmUuZXUiXSwic2NvcGUiOiJvcGVuaWQgcHJvZmlsZSBlbWFpbCIsInN1YiI6IjRmYzVmZmY3LWE4ODEtNGRiNS1iZWNjLTQ1ODQxOTk5NTAxMCIsInNpZCI6ImVhZjBkZDJmLTRjMDUtNDQzZC05YWJkLWRmODIxZTM1ZWQwMiIsImF1dGhfdGltZSI6MTc4NTI1NDMzNywiYWNyIjoiMjYyY2U0YjAxZDE5ZGQ5ZDM4NWQyNmJkZGI0Mjk3YjYiLCJhdXRoZW50aWNhdG9yIjoicHdkIiwiaHR0cDovL21lZGlha2luZC5jb20vbWYvdGlkIjoiZGVmYXVsdCIsImVudiI6IjY4MzQwZGUxLWRmYjktNDEyZS05MzdjLTIwMTcyOTg2ZDEyOSIsIm9yZyI6IjNhNjg1MDMyLTgzMjYtNDk2OS1hNzhiLWNjMjk3NzViMTNkNiIsInAxLnJpZCI6IjNkMGY3ZmE3LTM5NjItNDkwOC04NmMxLTNlNWViZGFhMGMxYiJ9.SmdtsDgwHyY0ikBImVoe3_UNEqrktAj1qFaR7W_2TsT-CiHrtRwuBneUSEKZ0ZBXYd-DOp-nk9JpyWEeWFLTIfonkoqjf4AIkTRRKFk-nae7twWAuww4NvSHM2AridxhvWSfP-GtOSSJKIPfw22yfEGXYmuAtdDkTktVT86EUJlgjlN4ruFlZl-cgx1XWBtREjxZT23LFub10QdGjeUqJrooRcaxht4Od3Elwbp_R_Pb-vJLMJx6QvxGb08t3COCOiL80QqAAZt39gzRy8CEhla8VWBkoW4IivARVZheuqg4WkbpSpr80e5VA_9YCTI_6KbcxYEHeW6CTC6wJHs_eg'
+    'x-api-authorization': 'Bearer eyJhbGciOiJSUzI1NiIsImtpZCI6ImRlZmF1bHQifQ.eyJjbGllbnRfaWQiOiJiZmNiYWY2OS1hYWRlLTRjMWItOGYwMC1jMWNiOGExOTMwMzAiLCJpc3MiOiJodHRwczovL2F1dGgucGluZ29uZS5ldS82ODM0MGRlMS1kZmI5LTQxMmUtOTM3Yy0yMDE3Mjk4NmQxMjkvYXMiLCJqdGkiOiIwZjIyOGE0Mi1hNGY0LTQ3ZGQtYTkzOS0yZTgzM2I1Nzg0ZTYiLCJpYXQiOjE3OTMwMzMwMTQsImV4cCI6MTc5MzAzNjYxNCwiYXVkIjpbImh0dHBzOi8vYXBpLnBpbmdvbmUuZXUiXSwic2NvcGUiOiJpbnRlcmVzdCBvcGVuaWQgcDE6dXBkYXRlOnVzZXIgcHJvZmlsZSBjb25zZW50IGVtYWlsIiwic3ViIjoiNGZjNWZmZjctYTg4MS00ZGI1LWJlY2MtNDU4NDE5OTk1MDEwIiwic2lkIjoiMjFiYzNlODEtMTEzNC00OGY2LTg4YWUtM2MzZTMxOWQxMWI5IiwiYXV0aF90aW1lIjoxNzkyNzU0OTMyLCJhY3IiOiIyNjJjZTRiMDFkMTlkZDlkMzg1ZDI2YmRkYjQyOTdiNiIsImF1dGhlbnRpY2F0b3IiOiJwd2QiLCJodHRwOi8vbWVkaWFraW5kLmNvbS9tZi90aWQiOiJkZWZhdWx0IiwiZW52IjoiNjgzNDBkZTEtZGZiOS00MTJlLTkzN2MtMjAxNzI5ODZkMTI5Iiwib3JnIjoiM2E2ODUwMzItODMyNi00OTY5LWE3OGItY2MyOTc3NWIxM2Q2IiwicDEucmlkIjoiZjY0MzljMDktNjQ1My00NWMzLTk0ZDItZGRlMjkyMDJmMGEwIn0.MjyZFpEN4Bd9hMDucoFpgkBxMnX0SjzdmPHJ71FKb5BsxmJetS6Dic0YHc9ayxCYyX8mD6pkSmwy_xXd8UYato8AEio_9p-AsctdswTF5rJjEqoMsKRyNzKOu-Bg0boRcerznYnVfITOAK6V1KXbmM9AHkPz-qOQJNpnrG74Gi3Cf5VRxnUfzx-abgbkHrG8Brv647KKFsUO1CbSSacuj980v86LAL-H2DyNbD51egXAto0LqWYvkMmpJgReG1Kkzb6hIR4TcxfVEygITBcbj-pswleH_1NMf0gXexd8GrWAsUoThahNVPAtFE0uH0Jbk-aH3HvQGRCpgFCM7eS6WQ'
     }
 
+qOutfield = 1 - playedPercentageOutfield
+
+probSub1 = binom.sf(0, 10, qOutfield)
+probSub2 = binom.sf(1, 10, qOutfield)
+probSub3 = binom.sf(2, 10, qOutfield)
+probSubGk = 1 - playedPercentageGk
+
+print(f"Probability of 1 sub: {probSub1:.4f}, Probability of 2 subs: {probSub2:.4f}, Probability of 3 subs: {probSub3:.4f}, Probability of GK sub: {probSubGk:.4f}")
 
 def jsonRequest(url, cache_ttl=None, permanent=None):
     if cache_ttl is None:
@@ -27,13 +37,13 @@ def jsonRequest(url, cache_ttl=None, permanent=None):
     return json.loads(resp.text)
 
 
-def optimiseFplSquad(playerData: pd.DataFrame, maxBudget: float = 1000.0) -> pd.DataFrame:
-    playerData['selected_by_percent'] = playerData['selected_by_percent'].astype(float)
+def optimiseFplSquad(playerData: pd.DataFrame, maxBudget: float = 1000.0, variable: str = 'selected_by_percent') -> pd.DataFrame:
+    playerData[variable] = playerData[variable].astype(float)
     optimisationProblem = pulp.LpProblem("MaxSelectedPercentSquad", pulp.LpMaximize)
     playerVars = pulp.LpVariable.dicts("player", playerData.index, cat="Binary")
 
     optimisationProblem += pulp.lpSum(
-        [float(playerData.loc[i, "selected_by_percent"]) * playerVars[i] for i in playerData.index]
+        [float(playerData.loc[i, variable]) * playerVars[i] for i in playerData.index]
     )
 
     optimisationProblem += pulp.lpSum(
@@ -218,7 +228,7 @@ for player in newTeamList:
 if switch:
     print(None)
 
-print("\nDifference from most optimal squad:")
+print("\nDifference from most optimal £100M squad:")
 print("\nOut:")
 switch = True
 for player in newTeamList:
